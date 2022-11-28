@@ -15,8 +15,21 @@ async function getWeatherInLocation(searchedLocation) {
 
 function weatherDataDom(weatherData){
     const tempDom = document.getElementById("temperature")
-    const changeCelFarBtn = document.getElementById("far-cel")
+    const changeCelFarBtn = document.getElementById("far-cel");
     let temperature = Number(weatherData.main.temp)
+    changeCelFarBtn.addEventListener("click", function(){
+        let temperature = Number(weatherData.main.temp)
+        if(isCelcius){
+            isCelcius = false
+            console.log(temperature)
+            temperature = makeFarenheit(temperature)
+            tempDom.textContent = `${temperature}`
+        }else{
+            isCelcius = true
+            temperature = makeCelcius(temperature)
+            tempDom.textContent = `${temperature}`
+        }
+    })
     if(isCelcius){
         temperature = makeCelcius(temperature)
     }else{
@@ -32,6 +45,7 @@ function makeFarenheit(temperature){
 function makeCelcius(temperature){
     return `${(temperature - 273.15).toFixed(0)}C`
 }
+
 
 // {coord: {…}, weather: Array(1), base: 'stations', main: {…}, visibility: 10000, …}
 // base
