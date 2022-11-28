@@ -1,6 +1,7 @@
 import style from "./style.css";
 
-let isCelcius = false
+let isCelcius = true;
+const searchBtn = document.getElementById("search-btn")
 
 async function getWeatherInLocation(searchedLocation) {
   const response = await fetch(
@@ -8,85 +9,41 @@ async function getWeatherInLocation(searchedLocation) {
     { mode: "cors" }
   );
   const weatherData = await response.json();
-  console.log(weatherData)
-  weatherDataDom(weatherData)
-
+  console.log(weatherData);
+  weatherDataDom(weatherData);
 }
 
-function weatherDataDom(weatherData){
-    const tempDom = document.getElementById("temperature")
-    const changeCelFarBtn = document.getElementById("far-cel");
-    let temperature = Number(weatherData.main.temp)
-    changeCelFarBtn.addEventListener("click", function(){
-        let temperature = Number(weatherData.main.temp)
-        if(isCelcius){
-            isCelcius = false
-            console.log(temperature)
-            temperature = makeFarenheit(temperature)
-            tempDom.textContent = `${temperature}`
-        }else{
-            isCelcius = true
-            temperature = makeCelcius(temperature)
-            tempDom.textContent = `${temperature}`
-        }
-    })
-    if(isCelcius){
-        temperature = makeCelcius(temperature)
-    }else{
-        temperature = makeFarenheit(temperature)
-    }
-    tempDom.textContent = `${temperature}`
+function weatherDataDom(weatherData) {
+  const tempDom = document.getElementById("temperature");
+  let temperature = Number(weatherData.main.temp) - 273.15;
+  tempDom.textContent = `${temperature.toFixed(0)}C`
+  const whereDom = document.getElementById("location")
+  whereDom.textContent = `${weatherData.name}, ${weatherData.sys.country}`
+  const weatherDom = document.getElementById("weather")
+  weatherDom.textContent = `${weatherData.weather[0].main}`
+  const weatherDescriptionDom = document.getElementById("weather-description")
+  weatherDescriptionDom.textContent = `${weatherData.weather[0].description}`
+  const feelsLikeDom = document.getElementById("feels-like")
+  feelsLikeDom.textContent = `${weatherData.main.feels_like}`
+  const humidityDom = document.getElementById("humidity")
+  humidityDom.textContent = `${weatherData.main.humidity}`
+  const pressureDom = document.getElementById("pressure")
+  pressureDom.textContent = `${weatherData.main.pressure}`
+  const minTempDom = document.getElementById("min-temp")
+  minTempDom.textContent = `${weatherData.main.temp_min}`
+  const maxTempDom = document.getElementById("max-temp")
+  maxTempDom.textContent = `${weatherData.main.temp_max}`
 }
+
+// function makeFarenheitFromCelsius(temperature) {
+//   return (1.8 * (temperature) + 32).toFixed(0)
+// }
+// function makeCelciusFromFar(temperature) {
+//   return ((temperature - 32)/1.8).toFixed(0);
+// }
+
+searchBtn.addEventListener("click", function(){
+  const inputElement = document.getElementById("location-search-input")
+  getWeatherInLocation(`${inputElement.value}`)
+})
 getWeatherInLocation("London")
-
-function makeFarenheit(temperature){
-    return `${(1.8*(temperature - 273) + 32).toFixed(0)}F`
-}
-function makeCelcius(temperature){
-    return `${(temperature - 273.15).toFixed(0)}C`
-}
-
-
-// {coord: {…}, weather: Array(1), base: 'stations', main: {…}, visibility: 10000, …}
-// base
-// :
-// "stations"
-// clouds
-// :
-// {all: 75}
-// cod
-// :
-// 200
-// coord
-// :
-// {lon: -0.1257, lat: 51.5085}
-// dt
-// :
-// 1669657438
-// id
-// :
-// 2643743
-// main
-// :
-// {temp: 281.53, feels_like: 280.4, temp_min: 279.61, temp_max: 282.64, pressure: 1010, …}
-// name
-// :
-// "London"
-// sys
-// :
-// {type: 2, id: 2075535, country: 'GB', sunrise: 1669621169, sunset: 1669651064}
-// timezone
-// :
-// 0
-// visibility
-// :
-// 10000
-// weather
-// :
-// [{…}]
-// wind
-// :
-// {speed: 2.06, deg: 20}
-// [[Prototype]]
-// :
-// Object
