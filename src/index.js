@@ -1,5 +1,7 @@
 import style from "./style.css";
 
+let isCelcius = false
+
 async function getWeatherInLocation(searchedLocation) {
   const response = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${searchedLocation}&APPID=e5761062516b5679bd319bd9ace0ba5a`,
@@ -7,9 +9,29 @@ async function getWeatherInLocation(searchedLocation) {
   );
   const weatherData = await response.json();
   console.log(weatherData)
+  weatherDataDom(weatherData)
+
 }
 
+function weatherDataDom(weatherData){
+    const tempDom = document.getElementById("temperature")
+    const changeCelFarBtn = document.getElementById("far-cel")
+    let temperature = Number(weatherData.main.temp)
+    if(isCelcius){
+        temperature = makeCelcius(temperature)
+    }else{
+        temperature = makeFarenheit(temperature)
+    }
+    tempDom.textContent = `${temperature}`
+}
+getWeatherInLocation("London")
 
+function makeFarenheit(temperature){
+    return `${(1.8*(temperature - 273) + 32).toFixed(0)}F`
+}
+function makeCelcius(temperature){
+    return `${(temperature - 273.15).toFixed(0)}C`
+}
 
 // {coord: {…}, weather: Array(1), base: 'stations', main: {…}, visibility: 10000, …}
 // base
