@@ -17,6 +17,14 @@ body {
 #left-wrapper {
   position: relative;
 }
+#svg-weather{
+  height: 8rem;
+  width: 8rem;
+  background-size: contain;
+  display: inline-block;
+  margin-bottom: -3rem;
+}
+
 #location-search-input{
     width: 40%;
     height: 3rem;
@@ -85,21 +93,25 @@ body {
 }
 #div-border {
   position: absolute;
-  width: 2px;
+  width: 4px;
   height: 45%;
   background-color: whitesmoke;
   top: 20%;
   left: calc(50% - 1px);
+  border-radius: 2px;
 }
 #weather-data {
   height: 60%;
-  width: 100%;
-  border-radius: 2px;
+  width: 60%;
+  border-radius: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+  box-shadow: 0px -1px 23px 3px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0px -1px 23px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px -1px 23px 3px rgba(0,0,0,0.75);
 }
 .data-cell {
   flex-grow: auto;
@@ -110,19 +122,26 @@ body {
   font-size: clamp(1.2rem, 2vw, 3rem);
   color: #fff;
   font-weight: 300;
+  border-bottom: 2px solid #fff;
+  margin-bottom: 0.2rem;
 }
 .data-para {
-  font-size: clamp(1.2rem, 2vw, 3rem);
+  font-size: clamp(1rem, 2vw, 2.5rem);
   color: #fff;
+  font-weight:lighter;
 }
 #weather,
 #temperature {
   font-size: 5rem;
+  display: inline-block;
 }
 #location,
 #weather-description {
   font-size: 1.5rem;
   font-weight: 300;
+}
+#weather-description{
+  max-width: 60%;
 }
 
 .lds-spinner {
