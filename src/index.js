@@ -29,13 +29,16 @@ changeTempBtn.addEventListener("click", function(){
 
 function changeTemp(){
 const tempDom = document.getElementById("temperature");
+const farOrCel = document.getElementById("far-cel")
   if(isCelcius){
     isCelcius = false
     console.log(temperature)
+    farOrCel.lastElementChild.textContent = "F"
     tempDom.textContent = `${(makeFarenheitFromCelsius((Number(temperature) - 273.15)))}F`
   }else{
     isCelcius = true
     console.log(temperature)
+    farOrCel.lastElementChild.textContent = "C"
     tempDom.textContent = `${(Number(temperature) - 273.15).toFixed(0)}C`
   }
 }
