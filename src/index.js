@@ -1,16 +1,26 @@
 import style from "./style.css";
+import {loadAnimationEnd, loadAnimationStart} from "./loading"
 
 let isCelcius = true;
 const searchBtn = document.getElementById("search-btn")
 
 async function getWeatherInLocation(searchedLocation) {
+  loadAnimationStart()
+  try{
   const response = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${searchedLocation}&APPID=e5761062516b5679bd319bd9ace0ba5a`,
     { mode: "cors" }
   );
   const weatherData = await response.json();
-  console.log(weatherData);
+  loadAnimationEnd()
+  console.log(weatherData)
   weatherDataDom(weatherData);
+  }catch(error){
+    if(error.cod == 400){
+      alert("City not founf")
+    }
+  }
+
 }
 
 function weatherDataDom(weatherData) {
